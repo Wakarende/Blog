@@ -3,7 +3,7 @@ from config import config_options
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_uploads import UploadSet,configure_uploads,IMAGES
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -20,10 +20,7 @@ def create_app(config_name):
   bootstrap.init_app(app)
   db.init_app(app)
   login_manager.init_app(app)
-
- # configure UploadSet
-  configure_uploads(app,photos)
-
+  
   #Creating App configurations
   app.config.from_object(config_options[config_name])
 
@@ -32,5 +29,8 @@ def create_app(config_name):
 
   from.auth import auth as auth_blueprint
   app.register_blueprint(auth_blueprint)
+
+  # configure UploadSet
+  configure_uploads(app,photos)
 
   return app
