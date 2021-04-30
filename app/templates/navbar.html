@@ -18,8 +18,13 @@
       </form>
 
       <div class="text-end">
+        {% if current_user.is_authenticated %}
+        <li style="color:white;padding:15px;">{{current_user.username}}</li>
+        <button type="button" class="btn btn-outline-light me-2">Logout</button>
+        {% else %}
         <button type="button" class="btn btn-outline-light me-2">Login</button>
         <button type="button" class="btn btn-warning">Sign-up</button>
+        {%endif%}
       </div>
     </div>
   </div>
