@@ -14,7 +14,7 @@
 
     <div class="col-md-3 text-end">
       {% if current_user.is_authenticated %}
-        <li style="color: #00e6cb;padding:15px;"> <a href="{{url_for('main.profile',uname=current_user.username)}}"></a>{{current_user.username}}</li>
+        <li style="list-style: none;"> <a href="{{url_for('main.profile',uname=current_user.username)}}" style="color: #00e6cb;padding:15px; text-decoration: none;">{{current_user.username}}</a></li>
         <button type="button" class="btn btn-outline-light me-2"><a href="{{url_for('auth.logout')}}">Logout</a></button>
         {% else %}
         <button type="button" class="btn btn-outline-light me-2"><a href="{{url_for('auth.login')}}">Login</a></button>
