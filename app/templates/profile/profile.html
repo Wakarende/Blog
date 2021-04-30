@@ -19,7 +19,7 @@
   <!--Display profile photo-->
   <div class="col-md-4">
     {% if user.profile_pic_path %}
-    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail" style="border-radius: 100px; width: 200px; height: 200px;">
     {%else%}
     <p>No profile picture</p>
     {% endif %}
