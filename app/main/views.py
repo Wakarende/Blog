@@ -3,7 +3,7 @@ from . import main
 from ..models import User,Post
 from .forms import UpdateProfile,PostForm,UpdatePostForm
 from .. import db,photos
-from flask_login import login_required
+from flask_login import login_required,current_user
 
 
 @main.route('/')
@@ -54,9 +54,9 @@ def update_pic(uname):
 
 #Post Display
 @main.route("/post/<int:id>", methods = ["POST", "GET"])
-def post(id):
-    post = Post.query.filter_by(id = id).first()
-    return redirect(url_for("main.post", id = post.id))
+def posts(post_id):
+    post = Post.get_post(post_id)
+    return redirect(url_for("main.posts", post_id=post_id))
 
 
 #New Post
