@@ -1,13 +1,21 @@
-
+import urllib.request,json
 from .models import Quote
 
-url = "http://quotes.stormconsultancy.co.uk/random.json"
+quote_url = "http://quotes.stormconsultancy.co.uk/random.json"
 
 def get_quote():
   """
   Function to consume http request and return a Quote class instance
   """
-  response = requests.get(url).json()
+  with urllib.request.urlopen(quote_url) as url:
+    get_quotes_data = url.read()
+    get_quotes_response = json.loads(get_quotes_data)
 
-  random_quote = Quote(response.get("author"),response.get("quote"))
-  return random_quote
+    quote_results={}
+
+    if get_quotes_response['quote']:
+      quote_results['id'] = get_quotes_response['id']
+      quote_results['author'] = get_quotes_response['author']
+      quote_results['quote'] = get_quotes_response['quote']
+    
+  return quote_results
