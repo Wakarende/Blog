@@ -1,0 +1,7 @@
+Hello {{user.username}}
+  Welcome to  my blog The J Word! I'm so thrilled you decided to join the family!
+  The J word was created because I wanted people to be able to have a trustworthy and inspiring place to find everything you need on all things tech.
+  I hope you enjoy!
+
+  Yours,
+  J.

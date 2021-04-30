@@ -34,7 +34,11 @@ class DevConfig(Config):
 
   DEBUG=True
 
+class TestConfig(Config):
+  pass
+
 config_options={
   'development':DevConfig,
-  'production':ProdConfig
+  'production':ProdConfig,
+  'test':TestConfig
 }
