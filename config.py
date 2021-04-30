@@ -5,8 +5,8 @@ class Config:
   parent configurations class
   '''
   SECRET_KEY = os.environ.get('SECRET_KEY')
-  SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joykirii:kirii@localhost/pitch'
-  
+  SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joykirii:kirii@localhost/blog'
+
   @staticmethod
   def init_app (app):
     pass

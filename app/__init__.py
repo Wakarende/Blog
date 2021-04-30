@@ -3,7 +3,7 @@ from config import config_options
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
-bootstrap = Bootstrap(app)
+bootstrap = Bootstrap()
 db = SQLAlchemy()
 
 
@@ -13,7 +13,7 @@ def create_app(config_name):
   #Initialize Flask Extension
   bootstrap.init_app(app)
   db.init_app(app)
-  
+
   #Creating App configurations
   app.config.from_object(config_options[config_name])
 
