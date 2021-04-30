@@ -2,6 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
+# from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -16,6 +17,9 @@ class User(UserMixin,db.Model):
   username = db.Column(db.String(255),index=True)
   email = db.Column(db.String(255),unique = True)
   pass_secure = db.Column(db.String(255))
+  bio = db.Column(db.String(255))
+  profile_pic_path = db.Column(db.String())
+
 
   @property
   def password(self):
@@ -31,3 +35,5 @@ class User(UserMixin,db.Model):
 
   def __repr__(self):
     return f'User {self.username}'
+
+
