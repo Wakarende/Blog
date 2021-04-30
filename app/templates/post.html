@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+<header>
+   <h1>{{post.post_title}}</h1>
+   <a href="{{url_for('main.profile', id = post.user_id)}}">{{post.post_by}}</a> 
+    on {{post.posted_at.strftime('%B %d, %Y')}}
+</header>
+<div class="container">
+  {{post.post_content}}
+</div>
+{% endblock %}

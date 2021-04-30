@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+
+{% block content %}
+<main class="form-signin text-center">
+    <h1 class="h3 mb-3 fw-normal">Happy Writing!</h1>
+    <div class="form-floating">
+      {{wtf.quick_form(form)}}
+    </div>
+</main>
+{% endblock %}
+
+

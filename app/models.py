@@ -38,29 +38,32 @@ class User(UserMixin,db.Model):
 
 
 class Post(db.Model):
-  __tablename__='posts'
-  id = db.Column(db.Integer, primary_key=True)
-  title = db.Column(db.String(100), nullable=False)
-  date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-  content = db.Column(db.Text, nullable=False)
-  user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+  __tablename__ = 'posts'
+  id = db.Column(db.Integer,primary_key = True)
+  title = db.Column(db.String())
+  post_content = db.Column(db.String())
+  short_description = db.Column(db.String())
+  posted = db.Column(db.DateTime,default=datetime.utcnow)
+  author_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
-  def __repr__(self):
-    return f"Post('{self.title}', '{self.date_posted}')"
-        
   def save_post(self):
     db.session.add(self)
     db.session.commit()
 
-  def delete_post(self):
-    db.session.delete(self)
-    db.session.commit()
+  @classmethod
+  def get_user_post(cls,id):
+    user_posts = Post.query.filter_by(author_id = id).order_by(Post.posted.desc())
+    return user_posts
 
   @classmethod
-  def get_user_posts(cls,id):
-    posts = Post.query.filter_by(user_id = id).order_by(Post.posted_at.desc()).all()
-    return posts
+  def get_posts(cls):
+    all_posts = Post.query.order_by(Post.posted.desc())
+    return all_posts
 
   @classmethod
-  def get_all_posts(cls):
-    return Post.query.order_by(Post.posted_at).all()
+  def get_post(cls,id):
+    post= Post.query.filter_by(id = id).first() 
+    return post
+
+  def __repr__(self):
+    return f"POST {self.title}"
