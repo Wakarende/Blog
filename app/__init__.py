@@ -19,6 +19,7 @@ def create_app(config_name):
   #Initialize Flask Extension
   bootstrap.init_app(app)
   db.init_app(app)
+  login_manager.init_app(app)
 
   #Creating App configurations
   app.config.from_object(config_options[config_name])
