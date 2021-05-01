@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
 from ..models import User,Post
-from .forms import UpdateProfile,PostForm,UpdatePostForm
+from .forms import UpdateProfile,PostForm,UpdatePostForm,AddComment
 from .. import db,photos
 from flask_login import login_required,current_user
 
@@ -113,6 +113,33 @@ def delete_posts(post_id):
   flash('Your Post Has Been Deleted')
   return redirect(url_for('main.index'))
 
+#Add Comments
+@main.route('/new_comment',methods=["GET","POST"])
+def new_comment():
+  form=AddComment()
+  if form.validate_on_submit():
+    contents=form.contents.data
+    user=current_user
+    comment=Comment(contents=contents,user=user)
+    comment.save_comments()
+
+    
+    return redirect(url_for('main.new_comment'))
+
+  return render_template('new_comment.html',form=form)
+
+#Delete Comment
+@main.route('/del_comment/<blog_id>/<comment_id>',methods=["POST","GET"])
+@login_required
+def delete_comment(blog_id,comment_id):
+  blog=Blog.get_blogs(blog_id)
+  comment=Comment.get_comment(comment_id)
+  if blog.user != current_user:
+    abort(404)
+  comment.delete_comment()
+
+  flash("comment deleted")
+  return redirect(url_for('main.blogs',blog_id=blog.id,comment_id=comment.id))
 
 #Function to display Blogs created by specific user
 # @main.route('/user/<string:username>',methods=['GET','POST'])
