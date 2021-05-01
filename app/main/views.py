@@ -53,7 +53,11 @@ def update_pic(uname):
   return redirect(url_for('main.profile',uname=uname))
 
 
-@main.route('/post/new')
+@main.route('/post/new', methods= ['GET','POST'])
 @login_required
 def new_post():
-  return render_template('create_post.html',title='New Post')
+  form = PostForm()
+  if form.validate_on_submit():
+    flash('Your Post has been created!','success')
+    return redirect(url_for('main.index')
+  return render_template('create_post.html',title='New Post', form=form)
