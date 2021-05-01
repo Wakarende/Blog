@@ -20,6 +20,7 @@ class User(UserMixin,db.Model):
   bio = db.Column(db.String(255))
   profile_pic_path = db.Column(db.String())
   posts = db.relationship('Post', backref='user', lazy="dynamic")
+  comments=db.relationship("Comment",backref='user',lazy='dynamic')
 
   @property
   def password(self):
@@ -45,6 +46,7 @@ class Post(db.Model):
   short_description = db.Column(db.String())
   posted = db.Column(db.DateTime,default=datetime.utcnow)
   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  comments=db.relationship("Comment",backref='post',lazy='dynamic')
 
   def save_posts(self):
     db.session.add(self)
@@ -92,7 +94,7 @@ class Comment(db.Model):
 
   @classmethod
   def get_comments(cls,id):
-    comments=Comment.query.filter_by(blog_id=id).order_by(Comment.posted_on.desc())
+    comments=Comment.query.filter_by(post_id=id).order_by(Comment.posted_on.desc())
     return comments
   
   @classmethod

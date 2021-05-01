@@ -1,6 +1,6 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
-from ..models import User,Post
+from ..models import User,Post,Comment
 from .forms import UpdateProfile,PostForm,UpdatePostForm,AddComment
 from .. import db,photos
 from flask_login import login_required,current_user
@@ -77,8 +77,16 @@ def new_post():
 @login_required
 def posts(post_id):
   post=Post.query.get_or_404(post_id)
+  if post is None:
+    abort(404)
+  all_comments = Comment.get_comments(post.id)
+  comment_form = AddComment()
+  if comment_form.validate_on_submit():
+    comment = Comment(contents=comment_form.contents.data,user=current_user, post_id=post_id)
+    comment.save_comments()
 
-  return render_template('post.html', title=post.title, post=post)
+    return redirect(url_for('main.posts',post_id=post_id))
+  return render_template('post.html', title=post.title, post=post, comments=all_comments, comment_form=comment_form)
 
 #Update Post
 @main.route('/posts/<int:post_id>/update', methods=['GET','POST'])
@@ -129,17 +137,16 @@ def new_comment():
   return render_template('new_comment.html',form=form)
 
 #Delete Comment
-@main.route('/del_comment/<blog_id>/<comment_id>',methods=["POST","GET"])
+@main.route('/del_comment/<post_id>/<comment_id>',methods=["POST","GET"])
 @login_required
-def delete_comment(blog_id,comment_id):
-  blog=Blog.get_blogs(blog_id)
+def delete_comment(post_id,comment_id):
+  post=Post.get_posts(post_id)
   comment=Comment.get_comment(comment_id)
-  if blog.user != current_user:
+  if post.user != current_user:
     abort(404)
   comment.delete_comment()
 
-  flash("comment deleted")
-  return redirect(url_for('main.blogs',blog_id=blog.id,comment_id=comment.id))
+  return redirect(url_for('main.posts',post_id=post.id,comment_id=comment.id))
 
 #Function to display Blogs created by specific user
 # @main.route('/user/<string:username>',methods=['GET','POST'])
