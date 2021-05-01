@@ -5,20 +5,17 @@
     </a>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="/" class="nav-link px-2 link-secondary" style="color: #00e6cb;">Home</a></li>
-      <li><a href="{{url_for('main.new_post', uname=current_user.username)}}" class="nav-link px-2 link-dark">New Post</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+      <li><a href="/" class="nav-link px-2">Home</a></li>
+      <li><a href="{{url_for('main.new_post', uname=current_user.username)}}" class="nav-link px-2">New Post</a></li>
     </ul>
 
     <div class="col-md-3 text-end">
       {% if current_user.is_authenticated %}
-        <li style="list-style: none;"> <a href="{{url_for('main.profile',uname=current_user.username)}}" style="color: #00e6cb;padding:15px; text-decoration: none;">{{current_user.username}}</a></li>
-        <button type="button" class="btn btn-outline-light me-2"><a href="{{url_for('auth.logout')}}">Logout</a></button>
+        <li style="list-style: none;"> <a href="{{url_for('main.profile',uname=current_user.username)}}" style="color: #00e6cb;padding:15px; text-decoration: none;" class="mb-1">{{current_user.username}}</a></li>
+        <button type="button" class="btn btn-outline-dark me-2"><a href="{{url_for('auth.logout')}}" style="color:#00e6cb; text-decoration: none;">Logout</a></button>
         {% else %}
-        <button type="button" class="btn btn-outline-light me-2"><a href="{{url_for('auth.login')}}">Login</a></button>
-        <button type="button" class="btn btn-warning"><a href="{{url_for('auth.register')}}">Sign Up</a></button>
+        <button type="button" class="btn btn-outline-dark me-2"><a href="{{url_for('auth.login')}}" style="color:#00e6cb; text-decoration: none;">Login</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('auth.register')}}" style="color:#00e6cb; text-decoration: none;">Sign Up</a></button>
         {%endif%}
     </div>
   </header>

@@ -9,7 +9,8 @@ from flask_login import login_required,current_user
 @main.route('/',methods=['GET','POST'])
 def index():
   title = 'Blog'
-  posts = Post.query.all()
+  page=request.args.get('page', 1, type=int)
+  posts = Post.query.paginate(page=page, per_page=5)
   return render_template('index.html', title=title, posts=posts)
 
 @main.route('/user/<uname>')

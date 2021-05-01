@@ -8,7 +8,7 @@
 </div>
 <div class="container">
   <h2 class="text-center">Posts</h2>
-  {% for post in posts %}
+  {% for post in posts.items %}
     <article class="media content-section mb-5">
       <div class="media-body">
         <div class="article-metadata">
@@ -21,6 +21,15 @@
       </div>
     </article>
   {% endfor %}
+  {% for page_num in posts.iter_pages() %}
+    {% if page_num in posts.iter_pages() %}
+      <a class="btn btn-outline-info mb-4" href="{{url_for('main.index', page=page_num)}}">{{page_num}}</a>
+    {% else%}
+        ...
+    {% endif %}
+
+  {% endfor %}
+
 </div>
 {% endblock %}
 
