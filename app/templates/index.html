@@ -8,6 +8,13 @@
 </div>
 <div class="container">
   <h2>Posts</h2>
+  <h3>Posted by {{current_user}}</h3>
+  {% for post in posts_list %}
+        <h4 class="card-title">{{post.title}}</h4>
+        <p>{{post.posted}}</p>
+        <p>{{post.short_description}}</p>
+        <p>{{post.post_content}}</p>
+  {% endfor %}
 </div>
 
 {% endblock %}

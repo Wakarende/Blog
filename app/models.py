@@ -40,30 +40,34 @@ class User(UserMixin,db.Model):
 class Post(db.Model):
   __tablename__ = 'posts'
   id = db.Column(db.Integer,primary_key = True)
-  title = db.Column(db.String())
+  title = db.Column(db.String(150))
   post_content = db.Column(db.String())
   short_description = db.Column(db.String())
   posted = db.Column(db.DateTime,default=datetime.utcnow)
-  author_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
-  def save_post(self):
+  def save_posts(self):
     db.session.add(self)
     db.session.commit()
 
-  @classmethod
-  def get_user_post(cls,id):
-    user_posts = Post.query.filter_by(author_id = id).order_by(Post.posted.desc())
-    return user_posts
+  def delete_posts(self):
+    db.session.delete(self)
+    db.session.commit()
 
   @classmethod
-  def get_posts(cls):
-    all_posts = Post.query.order_by(Post.posted.desc())
-    return all_posts
-
+  def get_posts(cls,id):
+    posts=Post.query.filter_by(id=id).first()
+    return posts
+  
   @classmethod
-  def get_post(cls,id):
-    post= Post.query.filter_by(id = id).first() 
-    return post
+  def all_posts(cls):
+    posts=Post.query.all()
+    return posts
+    
+  @classmethod
+  def get_user_posts(cls,id):
+    posts=Post.query.filter_by(user_id=id).all()
+    return 
 
   def __repr__(self):
-    return f"POST {self.title}"
+    return f"Post {self.title}:{self.post_content}"

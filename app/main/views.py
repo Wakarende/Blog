@@ -6,10 +6,11 @@ from .. import db,photos
 from flask_login import login_required,current_user
 
 
-@main.route('/')
+@main.route('/',methods=['GET','POST'])
 def index():
   title = 'Blog'
-  return render_template('index.html', title=title)
+  posts = Post.query.all()
+  return render_template('index.html', title=title, posts=posts)
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -52,12 +53,21 @@ def update_pic(uname):
     db.session.commit()
   return redirect(url_for('main.profile',uname=uname))
 
-
+#New Post
 @main.route('/post/new', methods= ['GET','POST'])
 @login_required
 def new_post():
   form = PostForm()
   if form.validate_on_submit():
+    title=form.title.data
+    post_content=form.post_content.data
+    short_description=form.short_description.data
+    author_id=current_user
+    print(current_user._get_current_object().id)
+    new_post = Post(title=title,post_content=post_content,short_description=short_description,author_id=current_user)
+    db.session.add(new_post)
+    db.session.commit()
+
     flash('Your Post has been created!','success')
-    return redirect(url_for('main.index')
+    return redirect(url_for('main.index'))
   return render_template('create_post.html',title='New Post', form=form)

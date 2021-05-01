@@ -10,7 +10,7 @@ class UpdateProfile(FlaskForm):
 class PostForm(FlaskForm):
   title = StringField('Title', validators=[DataRequired()])
   short_description = StringField("Give a short decription of your post",validators = [Required(),Length(min=20,max=100,message='Must be between 20-100 characters')])
-  content = TextAreaField('Content', validators=[DataRequired()])
+  post_content = TextAreaField('Content', validators=[DataRequired()])
   submit = SubmitField('Post')
 
 class UpdatePostForm(FlaskForm):
