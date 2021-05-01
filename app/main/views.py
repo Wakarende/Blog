@@ -54,20 +54,37 @@ def update_pic(uname):
   return redirect(url_for('main.profile',uname=uname))
 
 #New Post
-@main.route('/post/new', methods= ['GET','POST'])
+# @main.route('/post/new', methods= ['GET','POST'])
+# @login_required
+# def new_post():
+#   form = PostForm()
+#   if form.validate_on_submit():
+#     title=form.title.data
+#     post_content=form.post_content.data
+#     short_description=form.short_description.data
+#     author_id=current_user
+#     print(current_user._get_current_object().id)
+#     new_post = Post(title=title,post_content=post_content,short_description=short_description,author_id=current_user)
+#     db.session.add(new_post)
+#     db.session.commit()
+
+#     flash('Your Post has been created!','success')
+#     return redirect(url_for('main.index'))
+#   return render_template('create_post.html',title='New Post', form=form)
+
+@main.route('/new_post', methods=['GET','POST'])
 @login_required
 def new_post():
-  form = PostForm()
+  form=PostForm()
   if form.validate_on_submit():
     title=form.title.data
-    post_content=form.post_content.data
+    post_content=form.title.data
     short_description=form.short_description.data
-    author_id=current_user
-    print(current_user._get_current_object().id)
-    new_post = Post(title=title,post_content=post_content,short_description=short_description,author_id=current_user)
-    db.session.add(new_post)
-    db.session.commit()
+    user=current_user
+    post=Post(title=title, post_content=post_content, user=user, short_description=short_description)
+    post.save_posts()
 
-    flash('Your Post has been created!','success')
+    flash("Post created successfully!")
     return redirect(url_for('main.index'))
-  return render_template('create_post.html',title='New Post', form=form)
+
+  return render_template("create_post.html", form=form, title="New Post")
