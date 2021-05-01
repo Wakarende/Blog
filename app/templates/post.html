@@ -10,11 +10,16 @@
       <div class="article-metadata">
         <small class="mr-2">Author: {{post.user.username}}</small><br>
         <small class="text-muted">{{post.posted.strftime('%d-%m-%Y at %H:%M:%S')}}</small>
+        {% if post.user == current_user %}
+        <div>
+          <a href="{{url_for('main.update_posts', post_id=post.id)}}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+          <a href="{{url_for('main.delete_posts', post_id=post.id)}}" class="btn btn-danger btn-sm mt-1 mb-1">Delete</a>
+        </div><hr>
+        {% endif %}
       </div>
       <h2 class="article-title">{{ post.title }}</h2>
       <h4 class="article-content">{{ post.short_description }}</h4>
       <p>{{post.post_content}}</p>
     </div>
   </article>
-</div>
 {% endblock %}
