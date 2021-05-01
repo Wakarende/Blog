@@ -63,7 +63,7 @@ class Post(db.Model):
   def all_posts(cls):
     posts=Post.query.all()
     return posts
-    
+
   @classmethod
   def get_user_posts(cls,id):
     posts=Post.query.filter_by(user_id=id).all()
@@ -71,3 +71,34 @@ class Post(db.Model):
 
   def __repr__(self):
     return f"Post {self.title}:{self.post_content}"
+
+
+class Comment(db.Model):
+  __tablename__='comments'
+
+  id=db.Column(db.Integer,primary_key=True)
+  contents=db.Column(db.String(255))
+  posted_on=db.Column(db.DateTime,default=datetime.utcnow)
+  user_id=db.Column(db.Integer,db.ForeignKey("users.id"))
+  post_id=db.Column(db.Integer,db.ForeignKey("posts.id"))
+
+  def save_comments(self):
+    db.session.add(self)
+    db.session.commit()
+
+  def delete_comment(self):
+    db.session.delete(self)
+    db.session.commit()
+
+  @classmethod
+  def get_comments(cls,id):
+    comments=Comment.query.filter_by(blog_id=id).order_by(Comment.posted_on.desc())
+    return comments
+  
+  @classmethod
+  def get_comment(cls,id):
+    comment=Comment.query.filter_by(id=id).first()
+    return comment
+
+  def __repr__(self):
+    return f"Comment {self.contents}"

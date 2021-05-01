@@ -10,10 +10,10 @@ from flask_login import login_required,current_user
 def index():
   title = 'Blog'
   page=request.args.get('page', 1, type=int)
-  posts = Post.query.paginate(page=page, per_page=5)
+  posts = Post.query.order_by(Post.posted.desc()).paginate(page=page, per_page=5)
   return render_template('index.html', title=title, posts=posts)
 
-@main.route('/user/<uname>')
+@main.route('/profile/<uname>')
 def profile(uname):
   user = User.query.filter_by(username = uname).first()
 
@@ -80,6 +80,7 @@ def posts(post_id):
 
   return render_template('post.html', title=post.title, post=post)
 
+#Update Post
 @main.route('/posts/<int:post_id>/update', methods=['GET','POST'])
 @login_required
 def update_posts(post_id):
@@ -100,6 +101,7 @@ def update_posts(post_id):
     form.post_content.data = post.post_content
   return render_template('create_post.html', title='Update Post', form =form, legend='Update Post')
 
+#Delete Posts
 @main.route('/posts/<int:post_id>/delete', methods=['GET','POST'])
 @login_required
 def delete_posts(post_id):
@@ -110,3 +112,13 @@ def delete_posts(post_id):
   db.session.commit()
   flash('Your Post Has Been Deleted')
   return redirect(url_for('main.index'))
+
+
+#Function to display Blogs created by specific user
+# @main.route('/user/<string:username>',methods=['GET','POST'])
+# def user_posts(username):
+#   title = 'Blog'
+#   page=request.args.get('page', 1, type=int)
+#   user = User.query.filter_by(username=username).first_or_404()
+#   posts = Post.query.filter_by(user=user).order_by(Post.posted.desc()).paginate(page=page, per_page=5)
+#   return render_template('user_posts.html', title=title, posts=posts, user=user)

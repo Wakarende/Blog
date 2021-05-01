@@ -8,7 +8,7 @@
   <article class="media content-section mb-5">
     <div class="media-body">
       <div class="article-metadata">
-        <small class="mr-2">Author: {{post.user.username}}</small><br>
+        <small class="mr-2">Author: <a href="#">{{post.user.username}}</a></small><br>
         <small class="text-muted">{{post.posted.strftime('%d-%m-%Y at %H:%M:%S')}}</small>
         {% if post.user == current_user %}
         <div>
