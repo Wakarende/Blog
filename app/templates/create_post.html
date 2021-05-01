@@ -2,10 +2,13 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block content %}
-<main class="form-signin text-center">
-    <h1 class="h3 mb-3 fw-normal">New Post</h1>
-    <div class="form-floating">
+<div class="form-floating">
+  <main class="form-signin">
+    <h1 class="h3 mb-3 fw-normal text-center">New Post</h1>
+    <div class="mb-3">
       {{wtf.quick_form(form)}}
     </div>
 </main>
+</div>
+
 {% endblock %}

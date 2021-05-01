@@ -7,15 +7,20 @@
 </div>
 </div>
 <div class="container">
-  <h2>Posts</h2>
-  <h3>Posted by {{current_user}}</h3>
-  {% for post in posts_list %}
-        <h4 class="card-title">{{post.title}}</h4>
-        <p>{{post.posted}}</p>
-        <p>{{post.short_description}}</p>
-        <p>{{post.post_content}}</p>
+  <h2 class="text-center">Posts</h2>
+  {% for post in posts %}
+    <article class="media content-section mb-5">
+      <div class="media-body">
+        <div class="article-metadata">
+          <small class="mr-2">Author: {{post.user.username}}</small><br>
+          <small class="text-muted">{{post.posted.strftime('%d-%m-%Y at %H:%M:%S')}}</small>
+        </div>
+        <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.short_description }}</p>
+        <small><a href="{{url_for('main.posts',post_id=post.id)}}">Read More</a></small>
+      </div>
+    </article>
   {% endfor %}
 </div>
-
 {% endblock %}
 

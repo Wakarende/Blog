@@ -4,12 +4,17 @@
 
 
 {% block content %}
-<header>
-   <h1>{{post.post_title}}</h1>
-   <a href="{{url_for('main.profile', id = post.user_id)}}">{{post.post_by}}</a> 
-    on {{post.posted_at.strftime('%B %d, %Y')}}
-</header>
 <div class="container">
-  {{post.post_content}}
+  <article class="media content-section mb-5">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="mr-2">Author: {{post.user.username}}</small><br>
+        <small class="text-muted">{{post.posted.strftime('%d-%m-%Y at %H:%M:%S')}}</small>
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <h4 class="article-content">{{ post.short_description }}</h4>
+      <p>{{post.post_content}}</p>
+    </div>
+  </article>
 </div>
 {% endblock %}
