@@ -52,11 +52,8 @@ def update_pic(uname):
     db.session.commit()
   return redirect(url_for('main.profile',uname=uname))
 
-#Post Display
-@main.route("/post/<int:id>", methods = ["POST", "GET"])
-def posts(post_id):
-    post = Post.get_post(post_id)
-    return redirect(url_for("main.posts", post_id=post_id))
 
-
-#New Post
+@main.route('/post/new')
+@login_required
+def new_post():
+  return render_template('create_post.html',title='New Post')
