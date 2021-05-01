@@ -69,7 +69,7 @@ def new_post():
     flash("Post created successfully!")
     return redirect(url_for('main.index'))
 
-  return render_template("create_post.html", form=form, title="New Post")
+  return render_template("create_post.html", form=form, title="New Post", legend='New Post')
 
 #See Full Post
 @main.route('/posts/<int:post_id>', methods=['GET','POST'])
@@ -78,3 +78,23 @@ def posts(post_id):
   post=Post.query.get_or_404(post_id)
 
   return render_template('post.html', title=post.title, post=post)
+
+@main.route('/posts/<int:post_id>/update', methods=['GET','POST'])
+@login_required
+def update_posts(post_id):
+  post=Post.query.get_or_404(post_id)
+  if post.user != current_user:
+    abort(403)
+  form = PostForm()
+  if form.validate_on_submit():
+    post.title=form.title.data
+    post.post_content=form.post_content.data
+    post.short_description=form.short_description.data
+    db.session.commit()
+    flash('your post has been updated!')
+    return redirect(url_for('main.posts', post_id=post.id))
+  elif request.method == 'GET':
+    form.title.data=post.title
+    form.short_description.data=post.short_description
+    form.post_content.data = post.post_content
+  return render_template('create_post.html', title='Update Post', form =form, legend='Update Post')

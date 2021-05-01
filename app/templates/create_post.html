@@ -4,7 +4,7 @@
 {% block content %}
 <div class="form-floating">
   <main class="form-signin">
-    <h1 class="h3 mb-3 fw-normal text-center">New Post</h1>
+    <legend class="text-center">{{ legend }}</legend>
     <div class="mb-3">
       {{wtf.quick_form(form)}}
     </div>
