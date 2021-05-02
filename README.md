@@ -31,11 +31,11 @@ This is a flask application that allows users to create blog posts and read othe
 - Step 2 : Go to the project root directory and install the virtualenv library using pip an afterwards create a virtual environment.
 - Step 3 : Go to config.py and set the SQLALCHEMY_DATABASE_URI to your own, you may use Postgres or any other SQL databse client.
   -Step 4 : Download the all dependencies in the requirements.txt using pip install -r requirements.txt
-- Step 5: Create a file in your root directory called start.sh and store a generated SECRET key like so `python export SECRET_KEY="<your-key>"`
-  On the same file write down the command `python python3 manage.py server`
-- Step 6 : On your terminal, run the following command, `python chmod a+x start.sh`
+- Step 5: Create a file in your root directory called start.sh and store a generated SECRET key like so `export SECRET_KEY="<your-key>"`
+  On the same file write down the command `python3 manage.py server`
+- Step 6 : On your terminal, run the following command, `chmod a+x start.sh`
 
-- You can now launch the application locally by running the command `python ./start.sh`
+- You can now launch the application locally by running the command `./start.sh`
 
 ## Technology Used
 
