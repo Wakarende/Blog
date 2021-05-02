@@ -5,11 +5,12 @@ from .forms import UpdateProfile,PostForm,UpdatePostForm,AddComment,AddSubscribe
 from .. import db,photos
 from flask_login import login_required,current_user
 from ..email import subcriber_mail
-
+from ..requests import get_quote
 
 @main.route('/',methods=['GET','POST'])
 def index():
   title = 'Blog'
+  quote = get_quote()
   page=request.args.get('page', 1, type=int)
   recent_page= request.args.get('page', 1, type=int)
   posts = Post.query.order_by(Post.posted.asc()).paginate(page=page, per_page=6)
@@ -20,7 +21,7 @@ def index():
     new_post=Subscribe(email=email)
     new_post.save_subscriber()
 
-  return render_template('index.html', title=title, posts=posts, recent=recent,form=form)
+  return render_template('index.html', title=title, posts=posts, recent=recent,form=form,quote=quote)
 
 @main.route('/profile/<uname>')
 def profile(uname):

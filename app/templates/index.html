@@ -11,23 +11,24 @@
 <!-- jumbotron -->
 <div class="p-5 mb-4 bg-light rounded-3">
   <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Custom jumbotron</h1>
-    <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+    <p class="col-md-8 fs-4 text-center"><i class="fas fa-quote-left"></i>{{quote.quote}}<i class="fas fa-quote-right"></i>
+    <h1 class="display-5 fw-bold text-center"> - {{quote.author}}</h1>
+</p>
   </div>
 </div>
 <!-- All Blog Posts  -->
 <div class="container">
-  <h2 class="text-center">Posts</h2>
+  <h2 class="text-center mt-5">Posts</h2>
   <div class="row">
   {% for post in posts.items %}
     <div class="col-md-4">
       <div class="card mt-5 shadow " style="width:18rem;">
         <div class="card-body">
-          <h5 class="card-title"><a class="article-title" href="#">{{ post.title }}</a></h5>
-          <h6 class="card-subtitle text-muted">Author: <a href="{{url_for('main.user_posts',username = post.user.username)}}">{{post.user.username}}</a></h6>
+          <h5 class="card-title"><a class="article-title" href="#" style="text-decoration: none; color: #191414;">{{ post.title }}</a></h5>
+          <h6 class="card-subtitle text-muted">Author: <a href="{{url_for('main.user_posts',username = post.user.username)}}" style="text-decoration: none; color: #00e6cb;">{{post.user.username}}</a></h6>
           <small class="text-muted">Posted on: {{post.posted.strftime('%d-%m-%Y')}}</small>
           <p class="card-text mt-2">{{ post.short_description }}</p>
-          <a href="{{url_for('main.posts',post_id=post.id)}}">Read More</a>
+          <a href="{{url_for('main.posts',post_id=post.id)}}" style="text-decoration: none; color: #00e6cb;">Read More</a>
         </div>
       </div>
     </div>
@@ -57,11 +58,11 @@
         <div class="col-md-4">
             <div class="card mt-5 shadow" style="width:18rem;">
               <div class="card-body">
-                <h5 class="card-title"><a class="article-title" href="#">{{ post.title }}</a></h5>
-                <h6 class="card-subtitle text-muted">Author: <a href="{{url_for('main.user_posts',username = post.user.username)}}">{{post.user.username}}</a></h6>
+                <h5 class="card-title"><a class="article-title" href="#" style="text-decoration: none; color: #191414;">{{ post.title }}</a></h5>
+                <h6 class="card-subtitle text-muted">Author: <a href="{{url_for('main.user_posts',username = post.user.username)}}" style="text-decoration: none; color: #00e6cb;">{{post.user.username}}</a></h6>
                 <small class="text-muted">Posted on: {{post.posted.strftime('%d-%m-%Y')}}</small>
                 <p class="card-text mt-2">{{ post.short_description }}</p>
-                <a href="{{url_for('main.posts',post_id=post.id)}}">Read More</a>
+                <a href="{{url_for('main.posts',post_id=post.id)}}" style="text-decoration: none; color: #00e6cb;">Read More</a>
               </div>
             </div>
           </div>
@@ -83,31 +84,30 @@
 </div>
 
 <!-- Footer -->
- <footer class="bg-light">
+ <footer class="bg-light" style="margin-top: 80px;">
     <div class="container py-5">
       <div class="row py-4">
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"><img src="{{url_for('static', filename='img/blog_logo.png')}}" style=" width: 200px; height: 200px;"alt="" width="180" class="mb-3">
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"><img src="{{url_for('static', filename='img/blog_logo.png')}}" style=" width: 250px; height:250px;"alt="" width="180" class="mb-3">
          
           <ul class="list-inline mt-4">
-            <li class="list-inline-item"><a href="#" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></li>
-            <li class="list-inline-item"><a href="#" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></li>
-            <li class="list-inline-item"><a href="#" target="_blank" title="instagram"><i class="fa fa-instagram"></i></a></li>
-            <li class="list-inline-item"><a href="#" target="_blank" title="pinterest"><i class="fa fa-pinterest"></i></a></li>
-            <li class="list-inline-item"><a href="#" target="_blank" title="vimeo"><i class="fa fa-vimeo"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="twitter"><i class="fab fa-twitter" style="color: #00e6cb; font-size: 20px;"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="facebook"><i class="fab fa-facebook-f" style="color: #00e6cb; font-size: 20px;"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="instagram"><i class="fab fa-instagram" style="color: #00e6cb; font-size: 20px;"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="pinterest"><i class="fab fa-pinterest" style="color: #00e6cb; font-size: 20px;"></i></a></li>
+            <li class="list-inline-item"><a href="#" target="_blank" title="vimeo"><i class="fab fa-linkedin-in" style="color: #00e6cb; font-size: 20px;"></i></a></li>
           </ul>
         </div>
         <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
           <h6 class="text-uppercase font-weight-bold mb-4">Social</h6>
           <ul class="list-unstyled mb-0">
-            <li class="mb-2"><a href="#" class="text-muted">For Women</a></li>
-            <li class="mb-2"><a href="#" class="text-muted">For Men</a></li>
-            <li class="mb-2"><a href="#" class="text-muted">Stores</a></li>
-            <li class="mb-2"><a href="#" class="text-muted">Our Blog</a></li>
+            <li class="mb-2"><a href="/" class="" style="color: #00e6cb; text-decoration: none;">Home</a></li>
+            <li class="mb-2"><a href="{{url_for('main.new_post', uname=current_user.username)}}" class="" style="color: #00e6cb; text-decoration: none;">Add Post</a></li>
+            <li class="mb-2"><a href="{{url_for('main.profile',uname=current_user.username)}}" class="" style="color: #00e6cb; text-decoration: none;">Profile</a></li> 
           </ul>
         </div>
         <div class="col-lg-4 col-md-6 mb-lg-0">
           <h6 class="text-uppercase font-weight-bold mb-4">Newsletter</h6>
-          <p class="text-muted mb-4">Subscribe to our Newsletter.</p>
+          <p class=" mb-4">Subscribe to our Newsletter.</p>
           <div class="p-1 rounded border">
             {{wtf.quick_form(form)}}
           </div>
@@ -118,7 +118,7 @@
     <!-- Copyrights -->
     <div class="bg-light py-4">
       <div class="container text-center">
-        <p class="text-muted mb-0 py-2">© 2019 The J word All rights reserved.</p>
+        <p class=" mb-0 py-2">© 2019 The J word All rights reserved.</p>
       </div>
     </div>
   </footer>
