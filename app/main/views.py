@@ -1,9 +1,10 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
-from ..models import User,Post,Comment
-from .forms import UpdateProfile,PostForm,UpdatePostForm,AddComment
+from ..models import User,Post,Comment,Subscribe
+from .forms import UpdateProfile,PostForm,UpdatePostForm,AddComment,AddSubscriber
 from .. import db,photos
 from flask_login import login_required,current_user
+from ..email import subcriber_mail
 
 
 @main.route('/',methods=['GET','POST'])
@@ -13,7 +14,13 @@ def index():
   recent_page= request.args.get('page', 1, type=int)
   posts = Post.query.order_by(Post.posted.desc()).paginate(page=page, per_page=4)
   recent=Post.query.order_by(Post.posted.desc()).paginate(page= recent_page, per_page=4)
-  return render_template('index.html', title=title, posts=posts, recent=recent)
+  form=AddSubscriber()
+  if form.validate_on_submit():
+    email=form.email.data
+    new_post=Subscribe(email=email)
+    new_post.save_subscriber()
+
+  return render_template('index.html', title=title, posts=posts, recent=recent,form=form)
 
 @main.route('/profile/<uname>')
 def profile(uname):
