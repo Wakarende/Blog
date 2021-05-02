@@ -12,8 +12,8 @@ def index():
   title = 'Blog'
   page=request.args.get('page', 1, type=int)
   recent_page= request.args.get('page', 1, type=int)
-  posts = Post.query.order_by(Post.posted.desc()).paginate(page=page, per_page=4)
-  recent=Post.query.order_by(Post.posted.desc()).paginate(page= recent_page, per_page=4)
+  posts = Post.query.order_by(Post.posted.asc()).paginate(page=page, per_page=6)
+  recent=Post.query.order_by(Post.posted.desc()).paginate(page= recent_page, per_page=6)
   form=AddSubscriber()
   if form.validate_on_submit():
     email=form.email.data
@@ -75,6 +75,12 @@ def new_post():
     user=current_user
     post=Post(title=title, post_content=post_content, user=user, short_description=short_description)
     post.save_posts()
+    subcriberList=Subscribe.query.all()
+    subcribers=[]
+    for subcriber in subcriberList:
+      subcribers.append(subcriber.email)
+    for subcriber in subcribers:
+      subcriber_mail("New Blog Created!","email/subscribe",subcriber,user=current_user,post=post)
 
     flash("Post created successfully!")
     return redirect(url_for('main.index'))
