@@ -22,3 +22,7 @@ class UpdatePostForm(FlaskForm):
 class AddComment(FlaskForm):
   contents=TextAreaField("Write a comment",validators=[Required()])
   submit=SubmitField("Post comment") 
+
+class AddSubscriber(FlaskForm):
+  email = StringField('Your Email Address',validators=[Required(),Email()])
+  submit=SubmitField("Submit") 
