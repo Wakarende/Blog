@@ -10,8 +10,10 @@ from flask_login import login_required,current_user
 def index():
   title = 'Blog'
   page=request.args.get('page', 1, type=int)
-  posts = Post.query.order_by(Post.posted.desc()).paginate(page=page, per_page=5)
-  return render_template('index.html', title=title, posts=posts)
+  recent_page= request.args.get('page', 1, type=int)
+  posts = Post.query.order_by(Post.posted.desc()).paginate(page=page, per_page=4)
+  recent=Post.query.order_by(Post.posted.desc()).paginate(page= recent_page, per_page=4)
+  return render_template('index.html', title=title, posts=posts, recent=recent)
 
 @main.route('/profile/<uname>')
 def profile(uname):
@@ -156,3 +158,10 @@ def delete_comment(post_id,comment_id):
 #   user = User.query.filter_by(username=username).first_or_404()
 #   posts = Post.query.filter_by(user=user).order_by(Post.posted.desc()).paginate(page=page, per_page=5)
 #   return render_template('user_posts.html', title=title, posts=posts, user=user)
+
+#Function to display Blogs created by specific user.
+@main.route('/user_posts/<string:username>',methods=["GET","POST"])
+def user_posts(username):
+  user=User.query.filter_by(username=username).first()
+  posts=Post.query.filter_by(user=user).order_by(Post.posted.desc()).all()
+  return redirect(url_for("main.profile",posts=posts,uname=username))

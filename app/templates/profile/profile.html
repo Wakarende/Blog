@@ -32,7 +32,29 @@
         {% endif %}
       </div>
     </div>
+    <div class="col-md-4">
+      {% for post in posts %}
+      <div class="card shadow p-3 mb-5 rounded card" style="width: 27em;margin: 2em;">
+        <div class="cardbody">
+          <h4>{{post.title | upper}}</a></h4><br>
+          <p>{{post.short_desription}}</p>
+          <p>Posted on : {{post.posted.strftime('%d-%m-%Y')}}</p>
+          <p id="usern"><a href="{{url_for('main.user_blogs',username = post.user.username)}}"><span
+                style="color:gray"><strong>Author: {{post.user.username}}</strong></span></a></p>
+          <div class="row">
+            <div class="col-md-6"><a href="{{url_for('main.posts',post_id=post.id)}}">
+                <h5>Read More<i class="bi bi-arrow-right-short"></i></h5>
+              </a></div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+
   </div>
 </div>
+<!-- User Blogs  -->
+
+ 
 
 {% endblock %}
