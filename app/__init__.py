@@ -19,15 +19,16 @@ mail = Mail()
 def create_app(config_name):
   app=Flask(__name__)
 
+  #Creating App configurations
+  app.config.from_object(config_options[config_name])
+
   #Initialize Flask Extension
   bootstrap.init_app(app)
   db.init_app(app)
   login_manager.init_app(app)
   mail.init_app(app)
 
-  #Creating App configurations
-  app.config.from_object(config_options[config_name])
-
+  
   from.main import main as main_blueprint
   app.register_blueprint(main_blueprint)
 
