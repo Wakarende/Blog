@@ -45,7 +45,7 @@ class Post(db.Model):
   post_content = db.Column(db.String())
   short_description = db.Column(db.String())
   posted = db.Column(db.DateTime,default=datetime.utcnow)
-  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  user_id = db.Column(db.Integer,db.ForeignKey("users.id"), nullable=False)
   comments=db.relationship("Comment",backref='post',lazy='dynamic')
 
   def save_posts(self):
